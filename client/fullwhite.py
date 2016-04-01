@@ -34,44 +34,28 @@ def color_plasma(val):
     b = int(b * 256.0 - 0.5)
     return r | (g << 8) | (b << 16)
 
-def draw(screen, pix):
+def draw(screen):
+    im = Image.open("HACKSPACE64x64_BLUE.BMP")
     sz = 64
-    for x in range(0, sz):
-        for y in range(0, sz):
-            rgb = pix[x,y]
-            r, g, b = rgb
-            #screen[x,y] = 0xaeaeae
-            val = (hex(r) + hex(g)[2:] + hex(b)[2:]).strip()
-            screen[x, y] = r | (b << 8) | (g << 16)
-            #print(val + "-")
+    screen[:,:] = 0x00ff00
 
 def main():
     next_tick = time.time()
     frames = 0
-    if len(sys.argv) > 1:
-        filename = sys.argv[1]
-    else:
-        filename = "m64.BMP"
-
-    im = Image.open(filename)
-    pix = im.load()
     m = MatrixScreen()
     try:
-        start = time.time()
-        while (time.time() - start) < 10:
+        while True:
             now = time.time()
             if now > next_tick:
                 print(frames)
                 frames = 0
                 next_tick += 1.0
             frames += 1
-            draw(m.screen, pix)
+            draw(m.screen)
             m.send()
-            time.sleep(0.1)
     except:
         m.screen[:] = 0
         m.send()
-        raise
 
 if __name__ == "__main__":
     main()
