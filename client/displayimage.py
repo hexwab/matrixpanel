@@ -52,13 +52,17 @@ def main():
         filename = sys.argv[1]
     else:
         filename = "m64.BMP"
+    if len(sys.argv) > 2:
+        timeout = int(sys.argv[2])
+    else:
+        timeout = 10
 
     im = Image.open(filename)
     pix = im.load()
     m = MatrixScreen()
     try:
         start = time.time()
-        while (time.time() - start) < 10:
+        while (time.time() - start) < timeout:
             now = time.time()
             if now > next_tick:
                 print(frames)
