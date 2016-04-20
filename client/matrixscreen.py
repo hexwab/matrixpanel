@@ -1,7 +1,7 @@
 import socket
 import numpy as np
 
-TARGET_IP = "matrix"
+TARGET_IP = "192.168.9.2" # "matrix"
 TARGET_PORT = 3001
 
 class MatrixScreen():
